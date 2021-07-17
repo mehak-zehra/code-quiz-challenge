@@ -1,0 +1,76 @@
+*{
+  padding : 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+h1{
+  text-align: center;
+  padding: 10px;
+}
+
+.main-content {
+  text-align: center;
+}
+
+.countdown {
+  float: right;
+  margin-right: 10px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+a {
+  font-size: 20px;
+}
+
+a:hover {
+  color: blue;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+form {
+  margin-left: 80px;
+}
+
+.user-initials {
+  margin-left: 200px;
+  padding-left: 10px;
+  width: 50rem;
+  height: 10rem;
+  border-radius: 10px;
+  outline: none;
+  
+}
+
+/* styling for question display */
+#question-display {
+  font-size: 6rem;
+  font-weight: bold;
+  text-align: center;
+}
+ /* styling for correct/wrong display */
+#result-display {
+  margin-top: 40px;
+  padding: 20px;
+
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 20px 0;
+  color: black;
+  background-color: gray;
+  font-size: 2rem;
+}
+
+button.list-group-item {
+  margin-top: 10px;
+  margin-bottom: 10px;;
+}
+
+
