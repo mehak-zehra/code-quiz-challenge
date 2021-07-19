@@ -1,52 +1,6 @@
-
-//return
-// var returnEl = document.querySelector("#return-btn");
-//clear
-// var clearEl = document.querySelector("#clear-btn");
-var rowEl = document.querySelector(".row");
-
-
-
-{/* <table class="table table-dark">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">First</th>
-      <th scope="col">Last</th>
-      <th scope="col">Handle</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-    </tr>>
-  </tbody>
-</table> */}
-var loadScore = function(){
-    var tableEl = document.createElement("table");
-    tableEl.className= "table"
-    var tableHeadEl = document.createElement("thead");
-    tableHeadEl.className = "thead-dark"
-    var trEl = document.createElement("tr");
-
-    var thNameEl = document.createElement("th");
-    thNameEl.scope = "col";
-    thNameEl.textContent = "NAME";
-
-    var thScoreEl = document.createElement("th");
-    thScoreEl.scope = "col";
-    thScoreEl.textContent = "SCORE";
-
-    trEl.appendChild(thNameEl);
-    trEl.appendChild(thScoreEl);
-
-    tableHeadEl.appendChild(trEl);
-    tableEl.appendChild(tableHeadEl);
-
-    var tbodayEl = document.createElement("tbody");
+//Loading scores from local storage
+var loadScores = function() {
+    var tbodyEl = document.querySelector("tbody");
     var highscores = JSON.parse(localStorage.getItem("highscores"));
     for(var i = 0; i < highscores.length; i++) {
         var trDataEl = document.createElement("tr");
@@ -56,13 +10,22 @@ var loadScore = function(){
         var tdScoreEl = document.createElement("td");
         tdScoreEl.textContent = highscores[i].score;
 
+        var tdDateEL = document.createElement("td");
+        tdDateEL.textContent = highscores[i].date;
+
         trDataEl.appendChild(tdNameEl);
         trDataEl.appendChild(tdScoreEl);
+        trDataEl.appendChild(tdDateEL);
 
-        tbodayEl.appendChild(trDataEl);
+        tbodyEl.appendChild(trDataEl);
     }
-    tableEl.appendChild(tbodayEl);
-    rowEl.appendChild(tableEl);
-    
 }
-// loadScore();
+loadScores();
+
+//clear all scores from local storage
+$("#clear-btn").on("click", function(){
+    highscores = [];
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    location.reload();
+
+})

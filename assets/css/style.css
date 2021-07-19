@@ -4,7 +4,27 @@
   text-decoration: none;
 }
 
-h1{
+:root {
+  --primary-color: #ffc107;
+}
+/* heading styling */
+header {
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  
+}
+
+.countdown {
+  float: right;
+}
+
+a {
+  color: var(--primary-color)!important;
+}
+
+/* styling main content */
+h1 {
   text-align: center;
   padding: 10px;
 }
@@ -13,35 +33,24 @@ h1{
   text-align: center;
 }
 
-.countdown {
-  float: right;
-  margin-right: 10px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-a {
+#quiz-details {
   font-size: 20px;
 }
 
-a:hover {
-  color: blue;
-  text-decoration: none;
+/* styling for correct/wrong display */ 
+#result-display {
+  font-size: 35px;
   font-weight: bold;
+  margin-top: 40px;
+  padding: 20px;
 }
 
-form {
-  margin-left: 80px;
+#score-display {
+  display: none;
 }
 
-.user-initials {
-  margin-left: 200px;
-  padding-left: 10px;
-  width: 50rem;
-  height: 10rem;
-  border-radius: 10px;
-  outline: none;
-  
+#score-display h2 {
+  font-size: 50px;
 }
 
 /* styling for question display */
@@ -50,13 +59,14 @@ form {
   font-weight: bold;
   text-align: center;
 }
- /* styling for correct/wrong display */
-#result-display {
-  margin-top: 40px;
-  padding: 20px;
 
+/* styling for list of questions */
+button.list-group-item {
+  margin-top: 10px;
+  margin-bottom: 10px;;
 }
 
+/* footer styling */
 footer {
   position: fixed;
   bottom: 0;
@@ -64,13 +74,8 @@ footer {
   text-align: center;
   padding: 20px 0;
   color: black;
-  background-color: gray;
+  background-color: var(--primary-color);
   font-size: 2rem;
-}
-
-button.list-group-item {
-  margin-top: 10px;
-  margin-bottom: 10px;;
 }
 
 

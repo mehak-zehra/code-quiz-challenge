@@ -1,10 +1,15 @@
+//main-content element
 var mainEl = document.querySelector(".main-content");
+//element to display question
 var questionDisplayEl = document.querySelector("#question-display");
+//element to display correct/wrong answers
 var resultEl = document.querySelector("#result-display");
+//timer element
 var timerEl = document.querySelector("#timer");
+//created row element 
 var rowEl = document.querySelector(".row");
 
-
+// question/answer array
 var questionsArr = [
   {
     question: "What are variables used for in JavaScript Programs?",
@@ -65,168 +70,139 @@ var questionsArr = [
     correctAnswer: 1
   },
 ]
-
+//variables
 var questionIndex = 0;
 var correct = 0;
-var wrong = 0;
-var timer = 10;
-var userAnswers = [];
+var timer = 60;
 
+//Start the quiz when the button is pressed
 $("#quiz-btn").on("click", function () {
   startQuiz();
 });
 
-// 
+//When the quiz begins, Timer starts counting down and the main content is removed
 var startQuiz = function () {
-
   mainEl.remove();
   startCountdown();
-  loadQuestion(questionIndex);
+
+  //start with the first question
+  loadQuestion(0);
 }
 
-//function for timer 
-
-var startCountdown = function() {
-    var timeinterval = setInterval (function(){
-        if(timer > -1){
-          timerEl.innerText = timer;
-          timer--;
-        }
-        else {
-          timerEl.setAttribute("style", "color: red;")
-          clearInterval(timeinterval);
-          endQuiz();
-        }
-    }, 1000)
+//Timer countdown function
+var startCountdown = function () {
+  var timeinterval = setInterval(function () {
+    if (timer > -1) {
+      timerEl.innerText = timer;
+      timer--;
+    }
+    else {
+      timerEl.setAttribute("style", "color: red;")
+      clearInterval(timeinterval);
+      endQuiz();
+    }
+  }, 1000)
 }
 
-
+//Loads a single question at the given index
 var loadQuestion = function (index) {
   var createQuestionEl = document.createElement("div");
   createQuestionEl.className = "question list-group";
 
   var qDetailEl = document.createElement("h1");
   qDetailEl.textContent = questionsArr[index].question;
-  
+
   createQuestionEl.appendChild(qDetailEl);
 
   for (var i = 0; i < 4; i++) {
     var choicebtnEl = document.createElement("button");
     choicebtnEl.textContent = questionsArr[index].choices[i];
     choicebtnEl.type = "button"
-    choicebtnEl.className = "btn btn-primary list-group-item list-group-item-action"
+    choicebtnEl.className = "btn btn-outline-warning list-group-item list-group-item-action"
     choicebtnEl.setAttribute("selection", i);
 
-    choicebtnEl.addEventListener("click", function () {
-
-      // save selection to my scantron/answerSheet/userAnswers    
-      userAnswers[questionIndex] = this.getAttribute("selection");
-      if(userAnswers[questionIndex] == questionsArr[questionIndex].correctAnswer){
-        correct++; 
+    choicebtnEl.addEventListener("click", function () {  
+      var myAnswer = this.getAttribute("selection");
+      if (myAnswer == questionsArr[questionIndex].correctAnswer) {
+        correct++;
         timer += 3;
         resultEl.innerText = "Correct!";
+
       }
       else {
-        wrong++;
-        timer  -= 3;
+        timer -= 3;
         resultEl.innerText = "Wrong!"
 
       }
-      setTimeout(function() {
+
+      //wait half a sec before loading next question
+      setTimeout(function () {
         nextQuestion();
-      }, 1000);
-       
+      }, 500);
+
     });
 
     createQuestionEl.appendChild(choicebtnEl);
   }
 
-  
   questionDisplayEl.appendChild(createQuestionEl);
 }
 
-// sorry, this function has a bad name, its not only removing question, its doing more than that. Maybe nextQuestion?
-var nextQuestion = function() {
-  if(questionIndex >= questionsArr.length - 1) {
+//Loading next question 
+var nextQuestion = function () {
+  if (questionIndex >= questionsArr.length - 1) {
     timer = 0;
   }
   else {
     var questionEl = document.querySelector(".question");
     resultEl.innerText = "";
     questionEl.remove();
-  
+
     loadQuestion(++questionIndex);
   }
 }
 
-// 
-var endQuiz = function()  {
+// when the user done with the quiz or timer runs out. Score will be displayed and user can save their score
+var endQuiz = function () {
+  questionDisplayEl.remove();
+  resultEl.remove();
 
-  questionDisplayEl.remove(); 
-  resultEl.textContent = "Let's see how you did!";
+  var scoreDisplayEl = document.querySelector("#score-display")
+  scoreDisplayEl.style.display = "block";
 
-  
+  var scoreDescriptionEl = document.querySelector("#score-description");
+  if (correct === 10) {
+    scoreDescriptionEl.innerText = "WOW! Congratulation! You got a perfect score!!"
+    scoreDescriptionEl.className = "font-weight-bold"
+  }
+  else if (correct >= 7) {
+    scoreDescriptionEl.innerText = "Good Job! You scored " + correct + " out of " + questionsArr.length + " questions correctly.";
+  }
+  else {
+    scoreDescriptionEl.innerText = "You scored " + correct + " out of " + questionsArr.length + " questions correctly. You can do better, Try again!";
+  }
 
-  //create a form for submitting initials
-  var formEl = document.createElement("form");
-  formEl.setAttribute("id", "initials");
-  var inputEl = document.createElement("input");
-  inputEl.setAttribute("type", "text");
-  inputEl.setAttribute("name", "user-initials");
-  inputEl.className = "user-initials";
-  inputEl.setAttribute("placeholder", "Enter Your Initials");
-  formEl.appendChild(inputEl);
+  $("#submit-score").on("click", function () {
 
-  //submit button
-
-  var submitEl = document.createElement("button");
-  submitEl.className = "btn btn-primary";
-  submitEl.setAttribute("id", "save-initials");
-  submitEl.textContent = "Submit";
-
-  // addEventLister for submit button 
-  submitEl.addEventListener("click", function(event){
-    // event.preventDefault();
-
-    var textboxEl = document.querySelector(".user-initials");
+    var textboxEl = document.querySelector("#inputName");
     var userInitials = textboxEl.value;
-    console.log(userInitials);
 
-
-    var score = (correct/questionsArr.length)*100
-    console.log(score + "%");
-    console.log("saving score");
+    var score = (correct / questionsArr.length) * 100
     var highscores = JSON.parse(localStorage.getItem("highscores"));
-    if(!highscores) {
+    var date = moment().format("MM/DD/YYYY");
+
+    if (!highscores) {
       highscores = [];
     }
+
     highscores.push({
-      "name" : userInitials,
-      "score" : score
-    }) 
+      "name": userInitials,
+      "score": score,
+      "date": date
+    })
 
-    console.log(highscores);
+    localStorage.setItem("highscores", JSON.stringify(highscores));
+    $("#saveScoreModal").modal('hide');
 
-
-    localStorage.setItem("highscores",JSON.stringify(highscores));
   })
-
-  formEl.appendChild(submitEl);
-  rowEl.appendChild(formEl);
-  console.log("end quiz")
-
 }
-// save to highscores -- local storage
-
-var saveHighScore = function() {
-
- 
-}
-
-var loadScore = function() {
-  
-}
-
-
-
-

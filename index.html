@@ -5,41 +5,89 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="assets/css/style.css">
-  </link>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
   <title>Javascript |Quiz Challenge</title>
 </head>
 
 <body>
+  <!-- Header -->
   <header>
     <a class="highscore" href="./highscore.html">View Highscore</a>
     <div class="countdown">
-      <p>Time Remaining: <span id="timer">10</span> seconds</p>
+      <p>Time Remaining: <span id="timer">60</span> seconds</p>
     </div>
   </header>
-  <div class="container">
-    <div class="row">
-      <div class="col-6 main-content">
-        <h1 id ="main-heading">Code Quiz Challenge</h1>
-        <p id = "quiz-details">Test your coding knowledge in a timed test! The timer in the upper right hand corner of the screen will start
-          when you click "Start Quiz". <br />Try to answer as many questions as you can before the time ends.
-          For every wrong answer, your time will be docked 10 seconds. If you answer all the questions, you can view
-          your score!</p>
-        <button id="quiz-btn" type="button" class="btn btn-primary">Start Quiz</button>
+
+  <!-- Modal for saving scores and initials -->
+  <div class="modal fade" id="saveScoreModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Save Your Score</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Form for submitting scores and initials to local storage -->
+          <form class="form-inline">
+            <div class="form-group">
+              <label class="font-weight-bold" for="inputName">Name:</label>
+              <input type="text" id="inputName" class="form-control mx-sm-3" name="inputName">
+              <button type="button" id="submit-score" class="btn btn-warning">Submit</button>
+
+            </div>
+          </form>
+        </div>
       </div>
-      <div id ="question-display"></div>
-      <div id="result-display"></div>
     </div>
   </div>
 
-    <footer>
-      <p>&copy; Mehak Zehra 2021</p>
-    </footer>
+  <!-- main quiz container -->
+  <div class="container">
+    <div class="row">
+      <div class="main-content">
+        <h1 id="main-heading">Javascript Code Quiz</h1>
+        <p id="quiz-details">Test your coding knowledge in a timed test! The timer in the upper right hand corner of the
+          screen will start
+          when you click "Start Quiz". It's a 60 seconds timer!
+          For every wrong answer, your time will be docked 3 seconds. For every right answer, you'll get an additional 3
+          seconds. Answer all the questions before the time runs out</p>
+        <button id="quiz-btn" type="button" class="btn  btn-outline-warning btn-lg">Start Quiz</button>
+      </div>
+    </div>
+    <div class="row" id="question-display"></div>
+    <div class="row" id="result-display"></div>
+    <div class="row" id="score-display">
+      <h2>Let's see how you did!</h2>
+      <p id="score-description"></p>
+      <button type="button" class="btn btn-lg btn-outline-dark" id="save-btn" data-toggle="modal"
+        data-target="#saveScoreModal">
+        Save Your Score
+      </button>
+    </div>
+  </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="assets/js/script.js"></script>
+  <!-- Fooeter -->
+  <footer>
+    <p>&copy; Mehak Zehra 2021</p>
+  </footer>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="assets/js/script.js"></script>
+  <!-- scripts below are for bootstrap modal -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
 </body>
 
 </html>
